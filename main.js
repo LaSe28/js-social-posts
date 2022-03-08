@@ -103,17 +103,19 @@ for (let i = 0; i < posts.length; i++){
         <div class="post__footer">
             <div class="likes js-likes">
                 <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <a class="like-button  js-like-button" href="#" data-postid="${posts[i]['id']}">
                         <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                         <span class="like-button__label">Mi Piace</span>
                     </a>
                 </div>
                 <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i]['likes']}</b> persone
+                    Piace a <b id="like-counter-${posts[i]['id']}" class="js-likes-counter">${posts[i]['likes']}</b> persone
                 </div>
             </div> 
         </div>            
     </div>`
+
+   
     if(posts[i]['author']['image'] == null){
         card =  
         `<div class="post">
@@ -135,24 +137,32 @@ for (let i = 0; i < posts.length; i++){
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${posts[i]['id']}">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${posts[i]['likes']}</b> persone
+                        Piace a <b id="like-counter-${posts[i]['id']}" class="js-likes-counter">${posts[i]['likes']}</b> persone
                     </div>
                 </div> 
             </div>            
         </div>`
     }
-    
     container.innerHTML += card
-    
 }
-let likeBtn = document.querySelector('.like-button')
+let likedPosts = []
 
-likeBtn.addEventListener('click', function(){
-    this.classList.add('like-button--liked')
-})
+for (let i = 0; i < posts.length; i++){
+    let likeBtn = document.querySelector(`a[data-postid="${posts[i]['id']}"]`)
+    let likeCount = document.querySelector(`#like-counter-${posts[i]['id']}`)
+    let liked = false
+    likeBtn.addEventListener('click', function(){
+        likedPosts.push(posts[i].author.name)
+        this.classList.add('like-button--liked')
+        liked = true
+        if (liked == true){
+        likeCount.innerHTML = posts[i].likes + 1
+        }
+    })
+}
