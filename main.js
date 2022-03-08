@@ -152,17 +152,20 @@ for (let i = 0; i < posts.length; i++){
     container.innerHTML += card
 }
 let likedPosts = []
+let liked = false
 
 for (let i = 0; i < posts.length; i++){
     let likeBtn = document.querySelector(`a[data-postid="${posts[i]['id']}"]`)
     let likeCount = document.querySelector(`#like-counter-${posts[i]['id']}`)
-    let liked = false
     likeBtn.addEventListener('click', function(){
-        likedPosts.push(posts[i].author.name)
-        this.classList.add('like-button--liked')
+        if(!likedPosts.includes(posts[i].author.name)){
+            likedPosts.push(posts[i].author.name)
+        }
+        this.classList.toggle('like-button--liked')
+        let activeLikeBtn = document.querySelector(`like-button--liked`)
         liked = true
         if (liked == true){
-        likeCount.innerHTML = posts[i].likes + 1
+            likeCount.innerHTML = posts[i].likes + 1
         }
     })
 }
