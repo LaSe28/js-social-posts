@@ -8,11 +8,7 @@ const posts = [
             image: 'https://unsplash.it/300/300?image=15',
         },
         likes: 80,
-        created: {
-            year: 2021,
-            month: 06, 
-            day: 25
-        }
+        created: '2021-06-05'
     },
     {
         id: 2,
@@ -23,11 +19,7 @@ const posts = [
             image: 'https://unsplash.it/300/300?image=10',
         },
         likes: 120,
-        created: {
-            year: 2021,
-            month: 09,
-            day: 03,
-        }
+        created: '2021-09-03'
     },
     {
         id: 3,
@@ -38,11 +30,7 @@ const posts = [
             image: 'https://unsplash.it/300/300?image=20',
         },
         likes: 78,
-        created: {
-            year: 2021,
-            month:05,
-            day:15
-        }
+        created: '2021-05-15'
     },
     {
         id: 4,
@@ -53,11 +41,8 @@ const posts = [
             image: null,
         },
         likes: 56,
-        created: {
-            year: 2021,
-            month: 04,
-            day: 03,
-        }
+        created: '2021-04-03'
+        
     },
     {
         id: 5,
@@ -68,11 +53,7 @@ const posts = [
             image: 'https://unsplash.it/300/300?image=29',
         },
         likes: 95,
-        created: {
-            year: 2021,
-            month: 03,
-            day: 05
-        }
+        created: '2021-03-05'
     }
 ];
 let profilePic = document.querySelector('.post-meta')
@@ -87,7 +68,7 @@ for (let i = 0; i < posts.length; i++){
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${posts[i]['author']['name']}</div>
-                    <div class="post-meta__time">${posts[i]['created']['day']}-${posts[i]['created']['month']}-${posts[i]['created']['year']}</div>
+                    <div class="post-meta__time">${posts[i]['created'].split('-').reverse().join('/')}</div>
                 </div>                   
             </div>
         </div>
