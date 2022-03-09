@@ -6,7 +6,6 @@ const posts = [
         author: {
             name: 'Phil Mangione',
             image: 'https://unsplash.it/300/300?image=15',
-            shortName: 'PM'
         },
         likes: 80,
         created: {
@@ -22,7 +21,6 @@ const posts = [
         author: {
             name: 'Sofia Perlari',
             image: 'https://unsplash.it/300/300?image=10',
-            shortName: 'SF'
         },
         likes: 120,
         created: {
@@ -38,7 +36,6 @@ const posts = [
         author: {
             name: 'Chiara Passaro',
             image: 'https://unsplash.it/300/300?image=20',
-            shortName: 'CP'
         },
         likes: 78,
         created: {
@@ -54,7 +51,6 @@ const posts = [
         author: {
             name: 'Luca Formicola',
             image: null,
-            shortName: 'LF'
         },
         likes: 56,
         created: {
@@ -70,7 +66,6 @@ const posts = [
         author: {
             name: 'Alessandro Sainato',
             image: 'https://unsplash.it/300/300?image=29',
-            shortName: 'AS'
         },
         likes: 95,
         created: {
@@ -114,41 +109,6 @@ for (let i = 0; i < posts.length; i++){
             </div> 
         </div>            
     </div>`
-
-   
-    if(posts[i]['author']['image'] == null){
-        card =  
-        `<div class="post">
-            <div class="post__header">
-                <div class="post-meta">                    
-                    <div class="post-meta__icon profile-pic-default">
-                        <span>${posts[i]['author']['shortName']}</span>             
-                    </div>
-                    <div class="post-meta__data">
-                        <div class="post-meta__author">${posts[i]['author']['name']}</div>
-                        <div class="post-meta__time">${posts[i]['created']['day']}-${posts[i]['created']['month']}-${posts[i]['created']['year']}</div>
-                    </div>                   
-                </div>
-            </div>
-            <div class="post__text">${posts[i]['content']}</div>
-            <div class="post__image">
-                <img src="${posts[i]['media']}" alt="">
-            </div>
-            <div class="post__footer">
-                <div class="likes js-likes">
-                    <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="${posts[i]['id']}">
-                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                            <span class="like-button__label">Mi Piace</span>
-                        </a>
-                    </div>
-                    <div class="likes__counter">
-                        Piace a <b id="like-counter-${posts[i]['id']}" class="js-likes-counter">${posts[i]['likes']}</b> persone
-                    </div>
-                </div> 
-            </div>            
-        </div>`
-    }
     container.innerHTML += card
 }
 let likedPosts = []
@@ -158,14 +118,21 @@ for (let i = 0; i < posts.length; i++){
     let likeBtn = document.querySelector(`a[data-postid="${posts[i]['id']}"]`)
     let likeCount = document.querySelector(`#like-counter-${posts[i]['id']}`)
     likeBtn.addEventListener('click', function(){
-        if(!likedPosts.includes(posts[i].id)){
-            likedPosts.push(posts[i].id)
-        }
-        this.classList.toggle('like-button--liked')
-        let activeLikeBtn = document.querySelector(`like-button--liked`)
-        liked = true
-        if (liked == true){
-            likeCount.innerHTML = posts[i].likes + 1
+        if (likeBtn.classList.contains('like-button--liked')){
+            removeLike()
+        } else{
+            addLike()
         }
     })
+    function removeLike(){
+        likeBtn.classList.remove('like-button--liked')
+        let index = likedPosts.indexOf(posts[i].id)
+        likeCount.innerHTML = posts[i].likes 
+        likedPosts.splice(index, 1)
+    }
+    function addLike(){
+        likeBtn.classList.add('like-button--liked')
+        likeCount.innerHTML = posts[i].likes + 1
+        likedPosts.push(posts[i].id)
+    }
 }
