@@ -55,16 +55,27 @@ const posts = [
         likes: 95,
         created: '2021-03-05'
     }
-];
-let profilePic = document.querySelector('.post-meta')
+]
+let profilePic;
+
 
 for (let i = 0; i < posts.length; i++){
+    if (posts[i].author.image == null){
+        let arrNameParts = posts[i].author.name.split(' ');
+        let initials = '';
+        for (let index in arrNameParts){
+            initials+= arrNameParts[index][0].toUpperCase()
+        }
+        profilePic  = `<div class="profile-pic-default"><span>${initials}</span></div>`
+    } else{
+        profilePic = `<img class="profile-pic" src="${posts[i]['author']['image']}"> `
+    }
     card =  
     `<div class="post">
         <div class="post__header">
             <div class="post-meta">                    
                 <div class="post-meta__icon">
-                    <img class="profile-pic" src="${posts[i]['author']['image']}" alt="Phil Mangione">                    
+                    ${profilePic}
                 </div>
                 <div class="post-meta__data">
                     <div class="post-meta__author">${posts[i]['author']['name']}</div>
@@ -98,7 +109,8 @@ let liked = false
 for (let i = 0; i < posts.length; i++){
     let likeBtn = document.querySelector(`a[data-postid="${posts[i]['id']}"]`)
     let likeCount = document.querySelector(`#like-counter-${posts[i]['id']}`)
-    likeBtn.addEventListener('click', function(){
+    likeBtn.addEventListener('click', function(event){
+        event.preventDefault()
         if (likeBtn.classList.contains('like-button--liked')){
             removeLike()
         } else{
@@ -117,3 +129,4 @@ for (let i = 0; i < posts.length; i++){
         likedPosts.push(posts[i].id)
     }
 }
+
