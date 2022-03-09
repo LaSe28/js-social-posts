@@ -158,8 +158,8 @@ for (let i = 0; i < posts.length; i++){
     let likeBtn = document.querySelector(`a[data-postid="${posts[i]['id']}"]`)
     let likeCount = document.querySelector(`#like-counter-${posts[i]['id']}`)
     likeBtn.addEventListener('click', function(){
-        if(!likedPosts.includes(posts[i].author.name)){
-            likedPosts.push(posts[i].author.name)
+        if(!likedPosts.includes(posts[i].id)){
+            likedPosts.push(posts[i].id)
         }
         this.classList.toggle('like-button--liked')
         let activeLikeBtn = document.querySelector(`like-button--liked`)
